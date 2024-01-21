@@ -1,12 +1,5 @@
 from pydantic import BaseModel, Field, field_validator, ConfigDict
 from typing import Optional
-from enum import Enum
-
-
-class Status(Enum):
-    available = "available"
-    pending = "pending"
-    sold = "sold"
 
 
 class Category(BaseModel):
@@ -27,12 +20,13 @@ class Pet(BaseModel):
     name: str
     photoUrls: list[str] = Field(alias="photoUrls")
     tags: Optional[list[Tags]] = None
-    # status: Optional[Status] = None
-    #
-    # @field_validator("status")
-    # @classmethod
-    # def check_status(cls, value) -> str:
-    #     if value in Status:
-    #         return value
-    #     raise ValueError("This is incorrect status")
+    status: Optional[str] = None
+
+    @field_validator("status")
+    @classmethod
+    def check_status(cls, value) -> str:
+        statuses = ["available", "pending", "sold"]
+        if value in statuses:
+            return value
+        raise ValueError("This is incorrect status")
 
