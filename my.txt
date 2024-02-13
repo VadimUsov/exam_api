@@ -1,0 +1,5 @@
+docker build -t api_test .
+
+docker run -it --name api_test -v C:/Users/vadim.usov/PycharmProjects/pythonProject/exam_api:/api_pet_store/ api_test
+
+docker start -i api_test
